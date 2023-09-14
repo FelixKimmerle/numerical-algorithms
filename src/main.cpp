@@ -90,6 +90,11 @@ int main()
     std::cout << result.evaluate(1) << std::endl;
     std::cout << result.evaluate(2) << std::endl;
     std::cout << result.evaluate(5) << std::endl;
+
+    std::cout << evaluate_newton(newton_result, points, 0) << std::endl;
+    std::cout << evaluate_newton(newton_result, points, 1) << std::endl;
+    std::cout << evaluate_newton(newton_result, points, 2) << std::endl;
+    std::cout << evaluate_newton(newton_result, points, 5) << std::endl;
     // {
     //     std::cout << "A: " << std::endl
     //               << A << std::endl;

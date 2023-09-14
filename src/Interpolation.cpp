@@ -89,3 +89,14 @@ Polynomial get_newton_polynom(const std::vector<double> &coefficients, const std
     }
     return result;
 }
+
+double evaluate_newton(const std::vector<double> &coefficients, const std::vector<Point> &points, double x)
+{
+    int n = coefficients.size();
+    double p = coefficients[n-1];
+    for(int k = n-2; k >= 0; k--)
+    {
+        p = p * (x - points[k].x) + coefficients[k];
+    }
+    return p;
+}
