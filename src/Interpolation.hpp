@@ -12,5 +12,5 @@ struct Point
 Polynomial lagrange_interpolation(const std::vector<Point> &points);
 Polynomial aitken_neville(const std::vector<Point> &points);
 std::vector<double> newton(const std::vector<Point> &points);
-Polynomial get_newton_polynom(const std::vector<double> &coefficients, const std::vector<Point> &points);
-double evaluate_newton(const std::vector<double> &coefficients, const std::vector<Point> &points, double x);
+Polynomial get_newton_polynom(const std::vector<double> &newton_factors, const std::vector<Point> &points);
+double evaluate_newton(const std::vector<double> &newton_factors, const std::vector<Point> &points, double x);

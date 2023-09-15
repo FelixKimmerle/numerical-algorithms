@@ -1,5 +1,7 @@
-#include "Interpolation.hpp"
+#include <iomanip>
 
+#include "Interpolation.hpp"
+#include "Colors.hpp"
 Polynomial lagrange(int j, const std::vector<Point> &points)
 {
     Polynomial result({1});
@@ -27,10 +29,51 @@ Polynomial lagrange_interpolation(const std::vector<Point> &points)
     return result;
 }
 
+typedef std::vector<std::vector<Polynomial>> PolTable;
+typedef std::vector<std::vector<double>> NumTable;
+
+template <class T>
+void print(const std::vector<std::vector<T>> &table, const std::vector<Point> &points, Point current)
+{
+    for (int i = 0; i < table.size(); i++)
+    {
+        if (current.x == i || current.x - current.y == i)
+        {
+            std::cout << BLU << WHTB;
+        }
+        std::cout << points[i].x << reset << "|";
+        for (int j = 0; j < table[i].size() && j <= i; j++)
+        {
+            if (current.x == i && current.y == j)
+            {
+                std::cout << RED;
+            }
+            else if (current.x == i && current.y == j + 1)
+            {
+                std::cout << GRN;
+            }
+            else if (current.x == i + 1 && current.y == j + 1)
+            {
+                std::cout << GRN;
+            }
+            int w = 9;
+            if (typeid(T) == typeid(Polynomial))
+            {
+                w = w * (j+1);
+            }
+            std::stringstream ss;
+            ss << std::fixed << std::setprecision(2) << table[i][j];
+            std::cout << std::setw(w) << std::setfill(' ') << ss.str() << reset << "|";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "---------" << std::endl;
+}
+
 Polynomial aitken_neville(const std::vector<Point> &points)
 {
     int n = points.size();
-    std::vector<std::vector<Polynomial>> table(points.size(), std::vector<Polynomial>(n, Polynomial({0})));
+    PolTable table(points.size(), std::vector<Polynomial>(n, Polynomial({0})));
 
     for (int i = 0; i < n; i++)
     {
@@ -42,6 +85,7 @@ Polynomial aitken_neville(const std::vector<Point> &points)
         for (int i = k; i < n; i++)
         {
             table[i][k] = (Polynomial({-points[i - k].x, 1}) / (points[i].x - points[i - k].x)) * table[i][k - 1] + (Polynomial({points[i].x, -1}) / (points[i].x - points[i - k].x)) * table[i - 1][k - 1];
+            print(table, points, Point(i, k));
         }
     }
     return table[n - 1][n - 1];
@@ -61,8 +105,9 @@ std::vector<double> newton(const std::vector<Point> &points)
     {
         for (int i = k; i < n; i++)
         {
-            //std::cout << "(" << i << "," << k << ")" << " uses: " << "(" << i << "," << k-1 << ")" << " and " << "(" << i - 1 << "," << k-1 << ")" << std::endl;
+            // std::cout << "(" << i << "," << k << ")" << " uses: " << "(" << i << "," << k-1 << ")" << " and " << "(" << i - 1 << "," << k-1 << ")" << std::endl;
             table[i][k] = (table[i][k - 1] - table[i - 1][k - 1]) / (points[i].x - points[i - k].x);
+            print(table, points, Point(i, k));
         }
     }
 
@@ -93,8 +138,8 @@ Polynomial get_newton_polynom(const std::vector<double> &coefficients, const std
 double evaluate_newton(const std::vector<double> &coefficients, const std::vector<Point> &points, double x)
 {
     int n = coefficients.size();
-    double p = coefficients[n-1];
-    for(int k = n-2; k >= 0; k--)
+    double p = coefficients[n - 1];
+    for (int k = n - 2; k >= 0; k--)
     {
         p = p * (x - points[k].x) + coefficients[k];
     }
