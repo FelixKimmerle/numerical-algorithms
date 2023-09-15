@@ -150,15 +150,15 @@ double evaluate_newton(const std::vector<double> &coefficients, const std::vecto
 
 using namespace std::complex_literals;
 
-std::complex<double> omega(double n, double p)
+Complex omega(double n, double p)
 {
     return std::pow(std::pow(M_E, (2.0 * M_PI * 1i)/n), p);
 }
 
-Matrix<std::complex<double>> IDFT(const Matrix<std::complex<double>> &c)
+Matrix<Complex> IDFT(const Matrix<Complex> &c)
 {
     int n = c.numCols();
-    Matrix<std::complex<double>> M(n,n);
+    Matrix<Complex> M(n,n);
     for(int j = 0; j < n; j++)
     {
         for(int k = 0; k < n; k++)
@@ -169,11 +169,11 @@ Matrix<std::complex<double>> IDFT(const Matrix<std::complex<double>> &c)
     // auto M_ = M.transpose();
     // auto X = M * M_;
     // std::cout << X << std::endl;
-    //std::cout << (M * c.transpose()) * std::complex<double>(1.0/(n)) << std::endl;
+    //std::cout << (M * c.transpose()) * Complex(1.0/(n)) << std::endl;
     return (M * c.transpose());
 }
 
-Matrix<std::complex<double>> DFT(const Matrix<std::complex<double>> &v)
+Matrix<Complex> DFT(const Matrix<Complex> &v)
 {
     auto V_ = v.transpose().get_conjugated();
     auto idft = IDFT(V_);
