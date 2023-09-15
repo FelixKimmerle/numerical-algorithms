@@ -217,7 +217,7 @@ Matrix<T> Matrix<T>::operator-(const Matrix &other) const
 }
 
 template <>
-Matrix<std::complex<double>> Matrix<std::complex<double>>::get_conjugated() const
+Matrix<Complex> Matrix<Complex>::get_conjugated() const
 {
     Matrix result(rows, cols);
     for (int i = 0; i < rows; ++i)
@@ -366,7 +366,7 @@ Matrix<T> Matrix<T>::givensRotation(int n, int i, int j, T c, T s)
     return result;
 }
 template class Matrix<double>;
-template class Matrix<std::complex<double>>;
+template class Matrix<Complex>;
 
 // Overloaded operator<< for printing the matrix
 template<class T>

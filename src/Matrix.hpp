@@ -5,6 +5,8 @@
 #include <iostream>
 #include <complex>
 
+typedef std::complex<double> Complex;
+
 template <class T>
 class Matrix;
 
