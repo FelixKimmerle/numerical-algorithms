@@ -7,6 +7,10 @@
 #include "Polynom.hpp"
 #include "Interpolation.hpp"
 
+//TODO lineare ausgleichsrechnung
+//TODO QR mit nicht quadratischen matrizen
+//TODO Hermite interpolation
+
 int main()
 {
     std::cout << std::fixed;
