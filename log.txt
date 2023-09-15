@@ -1,0 +1,539 @@
+src/Matrix.cpp: In instantiation of ‘std::tuple<Matrix<T>, Matrix<T>, Matrix<T> > Matrix<T>::LR() const [with T = std::complex<double>]’:
+src/Matrix.cpp:331:16:   required from here
+src/Matrix.cpp:231:21: error: no match for ‘operator==’ (operand types are ‘std::complex<double>’ and ‘int’)
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/stl_algobase.h:64,
+                 from /usr/include/c++/13/bits/specfun.h:43,
+                 from /usr/include/c++/13/cmath:3699,
+                 from src/Matrix.cpp:1:
+/usr/include/c++/13/bits/stl_pair.h:812:5: note: candidate: ‘template<class _T1, class _T2> constexpr bool std::operator==(const pair<_T1, _T2>&, const pair<_T1, _T2>&)’
+  812 |     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_pair.h:812:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::pair<_T1, _T2>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/stl_algobase.h:67:
+/usr/include/c++/13/bits/stl_iterator.h:448:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator==(const reverse_iterator<_Iterator>&, const reverse_iterator<_Iterator>&)’
+  448 |     operator==(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:448:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:493:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator==(const reverse_iterator<_Iterator>&, const reverse_iterator<_IteratorR>&)’
+  493 |     operator==(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:493:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1678:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator==(const move_iterator<_IteratorL>&, const move_iterator<_IteratorR>&)’
+ 1678 |     operator==(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1678:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1748:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator==(const move_iterator<_IteratorL>&, const move_iterator<_IteratorL>&)’
+ 1748 |     operator==(const move_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1748:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/iosfwd:42,
+                 from /usr/include/c++/13/ios:40,
+                 from /usr/include/c++/13/istream:40,
+                 from /usr/include/c++/13/sstream:40,
+                 from /usr/include/c++/13/complex:45,
+                 from src/Matrix.cpp:2:
+/usr/include/c++/13/bits/postypes.h:192:5: note: candidate: ‘template<class _StateT> bool std::operator==(const fpos<_StateT>&, const fpos<_StateT>&)’
+  192 |     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/postypes.h:192:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::fpos<_StateT>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/string:43,
+                 from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44:
+/usr/include/c++/13/bits/allocator.h:237:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator==(const allocator<_CharT>&, const allocator<_T2>&)’
+  237 |     operator==(const allocator<_T1>&, const allocator<_T2>&)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/allocator.h:237:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::allocator<_CharT>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/basic_string.h:47,
+                 from /usr/include/c++/13/string:54:
+/usr/include/c++/13/string_view:608:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator==(basic_string_view<_CharT, _Traits>, basic_string_view<_CharT, _Traits>)’
+  608 |     operator==(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:608:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:615:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator==(basic_string_view<_CharT, _Traits>, __type_identity_t<basic_string_view<_CharT, _Traits> >)’
+  615 |     operator==(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:615:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:641:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator==(__type_identity_t<basic_string_view<_CharT, _Traits> >, basic_string_view<_CharT, _Traits>)’
+  641 |     operator==(__type_identity_t<basic_string_view<_CharT, _Traits>> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:641:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   mismatched types ‘std::basic_string_view<_CharT, _Traits>’ and ‘int’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3698:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3698 |     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3698:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3715:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const _CharT*)’
+ 3715 |     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3715:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3762:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3762 |     operator==(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3762:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/memory_resource.h:47,
+                 from /usr/include/c++/13/string:58:
+/usr/include/c++/13/tuple:1905:5: note: candidate: ‘template<class ... _TElements, class ... _UElements> constexpr bool std::operator==(const tuple<_UTypes ...>&, const tuple<_UTypes ...>&)’
+ 1905 |     operator==(const tuple<_TElements...>& __t,
+      |     ^~~~~~~~
+/usr/include/c++/13/tuple:1905:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::tuple<_UTypes ...>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/locale_facets.h:48,
+                 from /usr/include/c++/13/bits/basic_ios.h:37,
+                 from /usr/include/c++/13/ios:46:
+/usr/include/c++/13/bits/streambuf_iterator.h:234:5: note: candidate: ‘template<class _CharT, class _Traits> bool std::operator==(const istreambuf_iterator<_CharT, _Traits>&, const istreambuf_iterator<_CharT, _Traits>&)’
+  234 |     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/streambuf_iterator.h:234:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/complex:467:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator==(const complex<_Tp>&, const complex<_Tp>&)’
+  467 |     operator==(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:467:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/complex:472:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator==(const complex<_Tp>&, const _Tp&)’
+  472 |     operator==(const complex<_Tp>& __x, const _Tp& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:472:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   deduced conflicting types for parameter ‘const _Tp’ (‘double’ and ‘int’)
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+/usr/include/c++/13/complex:478:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator==(const _Tp&, const complex<_Tp>&)’
+  478 |     operator==(const _Tp& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:478:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/vector:66,
+                 from src/Matrix.hpp:3,
+                 from src/Matrix.cpp:4:
+/usr/include/c++/13/bits/stl_vector.h:2037:5: note: candidate: ‘template<class _Tp, class _Alloc> bool std::operator==(const vector<_Tp, _Alloc>&, const vector<_Tp, _Alloc>&)’
+ 2037 |     operator==(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_vector.h:2037:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:231:21: note:   ‘std::complex<double>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  231 |         if (R(j, j) == 0)
+      |             ~~~~~~~~^~~~
+In file included from /usr/include/c++/13/bits/ios_base.h:46:
+/usr/include/c++/13/system_error:449:3: note: candidate: ‘bool std::operator==(const error_code&, const error_code&)’
+  449 |   operator==(const error_code& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:449:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  449 |   operator==(const error_code& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:465:3: note: candidate: ‘bool std::operator==(const error_code&, const error_condition&)’
+  465 |   operator==(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:465:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  465 |   operator==(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:480:3: note: candidate: ‘bool std::operator==(const error_condition&, const error_condition&)’
+  480 |   operator==(const error_condition& __lhs,
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:480:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  480 |   operator==(const error_condition& __lhs,
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:517:3: note: candidate: ‘bool std::operator==(const error_condition&, const error_code&)’
+  517 |   operator==(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:517:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  517 |   operator==(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+src/Matrix.cpp:235:29: error: no match for ‘operator!=’ (operand types are ‘std::complex<double>’ and ‘int’)
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_pair.h:842:5: note: candidate: ‘template<class _T1, class _T2> constexpr bool std::operator!=(const pair<_T1, _T2>&, const pair<_T1, _T2>&)’
+  842 |     operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_pair.h:842:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::pair<_T1, _T2>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:462:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator!=(const reverse_iterator<_Iterator>&, const reverse_iterator<_Iterator>&)’
+  462 |     operator!=(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:462:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:507:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator!=(const reverse_iterator<_Iterator>&, const reverse_iterator<_IteratorR>&)’
+  507 |     operator!=(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:507:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1697:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator!=(const move_iterator<_IteratorL>&, const move_iterator<_IteratorR>&)’
+ 1697 |     operator!=(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1697:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1763:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator!=(const move_iterator<_IteratorL>&, const move_iterator<_IteratorL>&)’
+ 1763 |     operator!=(const move_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1763:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/postypes.h:197:5: note: candidate: ‘template<class _StateT> bool std::operator!=(const fpos<_StateT>&, const fpos<_StateT>&)’
+  197 |     operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/postypes.h:197:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::fpos<_StateT>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/allocator.h:245:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator!=(const allocator<_CharT>&, const allocator<_T2>&)’
+  245 |     operator!=(const allocator<_T1>&, const allocator<_T2>&)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/allocator.h:245:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::allocator<_CharT>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:648:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(basic_string_view<_CharT, _Traits>, basic_string_view<_CharT, _Traits>)’
+  648 |     operator!=(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:648:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:655:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(basic_string_view<_CharT, _Traits>, __type_identity_t<basic_string_view<_CharT, _Traits> >)’
+  655 |     operator!=(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:655:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:663:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(__type_identity_t<basic_string_view<_CharT, _Traits> >, basic_string_view<_CharT, _Traits>)’
+  663 |     operator!=(__type_identity_t<basic_string_view<_CharT, _Traits>> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:663:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   mismatched types ‘std::basic_string_view<_CharT, _Traits>’ and ‘int’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3776:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3776 |     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3776:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3790:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const _CharT*, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3790 |     operator!=(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3790:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3803:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const _CharT*)’
+ 3803 |     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3803:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/tuple:1960:5: note: candidate: ‘template<class ... _TElements, class ... _UElements> constexpr bool std::operator!=(const tuple<_UTypes ...>&, const tuple<_UTypes ...>&)’
+ 1960 |     operator!=(const tuple<_TElements...>& __t,
+      |     ^~~~~~~~
+/usr/include/c++/13/tuple:1960:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::tuple<_UTypes ...>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/streambuf_iterator.h:242:5: note: candidate: ‘template<class _CharT, class _Traits> bool std::operator!=(const istreambuf_iterator<_CharT, _Traits>&, const istreambuf_iterator<_CharT, _Traits>&)’
+  242 |     operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/streambuf_iterator.h:242:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/complex:486:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const complex<_Tp>&, const complex<_Tp>&)’
+  486 |     operator!=(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:486:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/complex:491:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const complex<_Tp>&, const _Tp&)’
+  491 |     operator!=(const complex<_Tp>& __x, const _Tp& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:491:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   deduced conflicting types for parameter ‘const _Tp’ (‘double’ and ‘int’)
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/complex:496:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const _Tp&, const complex<_Tp>&)’
+  496 |     operator!=(const _Tp& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:496:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_vector.h:2083:5: note: candidate: ‘template<class _Tp, class _Alloc> bool std::operator!=(const vector<_Tp, _Alloc>&, const vector<_Tp, _Alloc>&)’
+ 2083 |     operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_vector.h:2083:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:235:29: note:   ‘std::complex<double>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  235 |                 if (R(i, j) != 0)
+      |                     ~~~~~~~~^~~~
+/usr/include/c++/13/system_error:525:3: note: candidate: ‘bool std::operator!=(const error_code&, const error_code&)’
+  525 |   operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:525:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  525 |   operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:530:3: note: candidate: ‘bool std::operator!=(const error_code&, const error_condition&)’
+  530 |   operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:530:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  530 |   operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:535:3: note: candidate: ‘bool std::operator!=(const error_condition&, const error_code&)’
+  535 |   operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:535:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  535 |   operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:540:3: note: candidate: ‘bool std::operator!=(const error_condition&, const error_condition&)’
+  540 |   operator!=(const error_condition& __lhs,
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:540:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  540 |   operator!=(const error_condition& __lhs,
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+src/Matrix.cpp:245:32: error: cannot convert ‘std::complex<double>’ to ‘double’ in initialization
+  245 |             double l = R(i, j) / R(j, j);
+      |                        ~~~~~~~~^~~~~~~~~
+      |                                |
+      |                                std::complex<double>
+src/Matrix.cpp: In instantiation of ‘std::tuple<Matrix<T>, Matrix<T> > Matrix<T>::LR_Line() const [with T = std::complex<double>]’:
+src/Matrix.cpp:331:16:   required from here
+src/Matrix.cpp:271:21: error: no match for ‘operator+=’ (operand types are ‘double’ and ‘std::complex<double>’)
+  271 |                 sum += L(i, k) * R(k, j);
+      |                 ~~~~^~~~~~~~~~~~~~~~~~~~
+src/Matrix.cpp:280:21: error: no match for ‘operator+=’ (operand types are ‘double’ and ‘std::complex<double>’)
+  280 |                 sum += L(i, k) * R(k, j);
+      |                 ~~~~^~~~~~~~~~~~~~~~~~~~
+src/Matrix.cpp: In instantiation of ‘std::tuple<Matrix<T>, Matrix<T> > Matrix<T>::QR() const [with T = std::complex<double>]’:
+src/Matrix.cpp:331:16:   required from here
+src/Matrix.cpp:298:25: error: no match for ‘operator!=’ (operand types are ‘std::complex<double>’ and ‘int’)
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_pair.h:842:5: note: candidate: ‘template<class _T1, class _T2> constexpr bool std::operator!=(const pair<_T1, _T2>&, const pair<_T1, _T2>&)’
+  842 |     operator!=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_pair.h:842:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::pair<_T1, _T2>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:462:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator!=(const reverse_iterator<_Iterator>&, const reverse_iterator<_Iterator>&)’
+  462 |     operator!=(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:462:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:507:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator!=(const reverse_iterator<_Iterator>&, const reverse_iterator<_IteratorR>&)’
+  507 |     operator!=(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:507:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1697:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> constexpr bool std::operator!=(const move_iterator<_IteratorL>&, const move_iterator<_IteratorR>&)’
+ 1697 |     operator!=(const move_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1697:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_iterator.h:1763:5: note: candidate: ‘template<class _Iterator> constexpr bool std::operator!=(const move_iterator<_IteratorL>&, const move_iterator<_IteratorL>&)’
+ 1763 |     operator!=(const move_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_iterator.h:1763:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::move_iterator<_IteratorL>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/postypes.h:197:5: note: candidate: ‘template<class _StateT> bool std::operator!=(const fpos<_StateT>&, const fpos<_StateT>&)’
+  197 |     operator!=(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/postypes.h:197:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::fpos<_StateT>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/allocator.h:245:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator!=(const allocator<_CharT>&, const allocator<_T2>&)’
+  245 |     operator!=(const allocator<_T1>&, const allocator<_T2>&)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/allocator.h:245:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::allocator<_CharT>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:648:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(basic_string_view<_CharT, _Traits>, basic_string_view<_CharT, _Traits>)’
+  648 |     operator!=(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:648:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:655:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(basic_string_view<_CharT, _Traits>, __type_identity_t<basic_string_view<_CharT, _Traits> >)’
+  655 |     operator!=(basic_string_view<_CharT, _Traits> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:655:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘std::basic_string_view<_CharT, _Traits>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/string_view:663:5: note: candidate: ‘template<class _CharT, class _Traits> constexpr bool std::operator!=(__type_identity_t<basic_string_view<_CharT, _Traits> >, basic_string_view<_CharT, _Traits>)’
+  663 |     operator!=(__type_identity_t<basic_string_view<_CharT, _Traits>> __x,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:663:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   mismatched types ‘std::basic_string_view<_CharT, _Traits>’ and ‘int’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3776:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3776 |     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3776:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3790:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const _CharT*, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+ 3790 |     operator!=(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3790:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/basic_string.h:3803:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator!=(const __cxx11::basic_string<_CharT, _Traits, _Allocator>&, const _CharT*)’
+ 3803 |     operator!=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:3803:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/tuple:1960:5: note: candidate: ‘template<class ... _TElements, class ... _UElements> constexpr bool std::operator!=(const tuple<_UTypes ...>&, const tuple<_UTypes ...>&)’
+ 1960 |     operator!=(const tuple<_TElements...>& __t,
+      |     ^~~~~~~~
+/usr/include/c++/13/tuple:1960:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::tuple<_UTypes ...>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/streambuf_iterator.h:242:5: note: candidate: ‘template<class _CharT, class _Traits> bool std::operator!=(const istreambuf_iterator<_CharT, _Traits>&, const istreambuf_iterator<_CharT, _Traits>&)’
+  242 |     operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/streambuf_iterator.h:242:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/complex:486:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const complex<_Tp>&, const complex<_Tp>&)’
+  486 |     operator!=(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:486:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/complex:491:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const complex<_Tp>&, const _Tp&)’
+  491 |     operator!=(const complex<_Tp>& __x, const _Tp& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:491:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   deduced conflicting types for parameter ‘const _Tp’ (‘double’ and ‘int’)
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/complex:496:5: note: candidate: ‘template<class _Tp> constexpr bool std::operator!=(const _Tp&, const complex<_Tp>&)’
+  496 |     operator!=(const _Tp& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/complex:496:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/bits/stl_vector.h:2083:5: note: candidate: ‘template<class _Tp, class _Alloc> bool std::operator!=(const vector<_Tp, _Alloc>&, const vector<_Tp, _Alloc>&)’
+ 2083 |     operator!=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/stl_vector.h:2083:5: note:   template argument deduction/substitution failed:
+src/Matrix.cpp:298:25: note:   ‘std::complex<double>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  298 |             if (R(i, j) != 0)
+      |                 ~~~~~~~~^~~~
+/usr/include/c++/13/system_error:525:3: note: candidate: ‘bool std::operator!=(const error_code&, const error_code&)’
+  525 |   operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:525:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  525 |   operator!=(const error_code& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:530:3: note: candidate: ‘bool std::operator!=(const error_code&, const error_condition&)’
+  530 |   operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:530:32: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_code&’
+  530 |   operator!=(const error_code& __lhs, const error_condition& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:535:3: note: candidate: ‘bool std::operator!=(const error_condition&, const error_code&)’
+  535 |   operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:535:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  535 |   operator!=(const error_condition& __lhs, const error_code& __rhs) noexcept
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/13/system_error:540:3: note: candidate: ‘bool std::operator!=(const error_condition&, const error_condition&)’
+  540 |   operator!=(const error_condition& __lhs,
+      |   ^~~~~~~~
+/usr/include/c++/13/system_error:540:37: note:   no known conversion for argument 1 from ‘std::complex<double>’ to ‘const std::error_condition&’
+  540 |   operator!=(const error_condition& __lhs,
+      |              ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+src/Matrix.cpp:300:34: error: cannot convert ‘std::complex<double>’ to ‘const double’ in initialization
+  300 |                 const double r = -std::sqrt(std::pow(R(j, j), 2) + std::pow(R(i, j), 2));
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                  |
+      |                                  std::complex<double>
+src/Matrix.cpp:301:42: error: cannot convert ‘std::complex<double>’ to ‘const double’ in initialization
+  301 |                 const double c = R(j, j) / r;
+      |                                  ~~~~~~~~^~~
+      |                                          |
+      |                                          std::complex<double>
+src/Matrix.cpp:302:42: error: cannot convert ‘std::complex<double>’ to ‘const double’ in initialization
+  302 |                 const double s = R(i, j) / r;
+      |                                  ~~~~~~~~^~~
+      |                                          |
+      |                                          std::complex<double>
+make: *** [Makefile:59: build/debug/src/Matrix.cpp.o] Error 1

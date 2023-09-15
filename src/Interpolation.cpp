@@ -1,6 +1,8 @@
 #include <iomanip>
+#include <complex>
 
 #include "Interpolation.hpp"
+#include "Matrix.hpp"
 #include "Colors.hpp"
 Polynomial lagrange(int j, const std::vector<Point> &points)
 {
@@ -144,4 +146,37 @@ double evaluate_newton(const std::vector<double> &coefficients, const std::vecto
         p = p * (x - points[k].x) + coefficients[k];
     }
     return p;
+}
+
+using namespace std::complex_literals;
+
+std::complex<double> omega(double n, double p)
+{
+    return std::pow(std::pow(M_E, (2.0 * M_PI * 1i)/n), p);
+}
+
+Matrix<std::complex<double>> IDFT(const Matrix<std::complex<double>> &c)
+{
+    int n = c.numCols();
+    Matrix<std::complex<double>> M(n,n);
+    for(int j = 0; j < n; j++)
+    {
+        for(int k = 0; k < n; k++)
+        {
+            M(j,k) = omega(n, j * k);
+        }
+    }
+    // auto M_ = M.transpose();
+    // auto X = M * M_;
+    // std::cout << X << std::endl;
+    //std::cout << (M * c.transpose()) * std::complex<double>(1.0/(n)) << std::endl;
+    return (M * c.transpose());
+}
+
+Matrix<std::complex<double>> DFT(const Matrix<std::complex<double>> &v)
+{
+    auto V_ = v.transpose().get_conjugated();
+    auto idft = IDFT(V_);
+    auto res = idft.get_conjugated() * (1.0/v.numRows());
+    return res;
 }

@@ -99,6 +99,12 @@ int main()
     std::cout << evaluate_newton(newton_result, points, 1) << std::endl;
     std::cout << evaluate_newton(newton_result, points, 2) << std::endl;
     std::cout << evaluate_newton(newton_result, points, 5) << std::endl;
+
+
+    auto r = IDFT(Matrix<std::complex<double>>({{0, 1, 0, 0, 10, 5, 0, 0}}));
+    std::cout << r << std::endl;
+    auto r_ = DFT(r);
+    std::cout << r_ << std::endl;
     // {
     //     std::cout << "A: " << std::endl
     //               << A << std::endl;

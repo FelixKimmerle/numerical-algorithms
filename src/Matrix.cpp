@@ -1,30 +1,36 @@
 #include <cmath>
+#include <complex>
 
 #include "Matrix.hpp"
 
 // Constructor to create an empty matrix
-Matrix::Matrix(int numRows, int numCols) : rows(numRows), cols(numCols)
+template <class T>
+Matrix<T>::Matrix(int numRows, int numCols) : rows(numRows), cols(numCols)
 {
-    data.resize(rows, std::vector<double>(cols, 0.0));
+    data.resize(rows, std::vector<T>(cols, 0.0));
 }
 
 // Constructor to create a matrix from a 2D vector
-Matrix::Matrix(const std::vector<std::vector<double>> &input) : data(input), rows(input.size()), cols(input[0].size()) {}
+template <class T>
+Matrix<T>::Matrix(const std::vector<std::vector<T>> &input) : data(input), rows(input.size()), cols(input[0].size()) {}
 
 // Getter for the number of rows
-int Matrix::numRows() const
+template <class T>
+int Matrix<T>::numRows() const
 {
     return rows;
 }
 
 // Getter for the number of columns
-int Matrix::numCols() const
+template <class T>
+int Matrix<T>::numCols() const
 {
     return cols;
 }
 
 // Overloaded () operator to set a specific element in the matrix
-double &Matrix::operator()(int row, int col)
+template <class T>
+T &Matrix<T>::operator()(int row, int col)
 {
     if (row >= 0 && row < rows && col >= 0 && col < cols)
     {
@@ -34,7 +40,8 @@ double &Matrix::operator()(int row, int col)
 }
 
 // Overloaded () operator for getting a specific element from the matrix
-const double &Matrix::operator()(int row, int col) const
+template <class T>
+const T &Matrix<T>::operator()(int row, int col) const
 {
     if (row >= 0 && row < rows && col >= 0 && col < cols)
     {
@@ -44,7 +51,8 @@ const double &Matrix::operator()(int row, int col) const
 }
 
 // Overloaded operator* for matrix multiplication
-Matrix Matrix::operator*(const Matrix &other) const
+template <class T>
+Matrix<T> Matrix<T>::operator*(const Matrix &other) const
 {
     if (cols != other.rows)
     {
@@ -67,7 +75,27 @@ Matrix Matrix::operator*(const Matrix &other) const
     return result;
 }
 
-Matrix Matrix::transpose() const
+template <class T>
+Matrix<T> Matrix<T>::operator*(T other) const
+{
+    Matrix result(rows, cols);
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            for (int k = 0; k < cols; ++k)
+            {
+                result.data[i][j] = data[i][k] * other;
+            }
+        }
+    }
+
+    return result;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::transpose() const
 {
     Matrix result(cols, rows);
 
@@ -81,8 +109,8 @@ Matrix Matrix::transpose() const
 
     return result;
 }
-
-Matrix Matrix::identity(int size)
+template <class T>
+Matrix<T> Matrix<T>::identity(int size)
 {
     Matrix identityMatrix(size, size);
 
@@ -100,7 +128,8 @@ Matrix Matrix::identity(int size)
     return identityMatrix;
 }
 
-Matrix Matrix::getUpperRightTriangle(bool includeDiagonal) const
+template <class T>
+Matrix<T> Matrix<T>::getUpperRightTriangle(bool includeDiagonal) const
 {
     if (rows != cols)
     {
@@ -124,7 +153,8 @@ Matrix Matrix::getUpperRightTriangle(bool includeDiagonal) const
 }
 
 // Function to get the lower left triangle of the matrix
-Matrix Matrix::getLowerLeftTriangle(bool includeDiagonal) const
+template <class T>
+Matrix<T> Matrix<T>::getLowerLeftTriangle(bool includeDiagonal) const
 {
     if (rows != cols)
     {
@@ -147,7 +177,8 @@ Matrix Matrix::getLowerLeftTriangle(bool includeDiagonal) const
     return triangleMatrix;
 }
 
-Matrix Matrix::getDiagonal() const
+template <class T>
+Matrix<T> Matrix<T>::getDiagonal() const
 {
     if (rows != cols)
     {
@@ -164,7 +195,8 @@ Matrix Matrix::getDiagonal() const
     return diagonalMatrix;
 }
 
-Matrix Matrix::operator-(const Matrix &other) const
+template <class T>
+Matrix<T> Matrix<T>::operator-(const Matrix &other) const
 {
     if (rows != other.rows || cols != other.cols)
     {
@@ -184,7 +216,28 @@ Matrix Matrix::operator-(const Matrix &other) const
     return result;
 }
 
-Matrix Matrix::generatePermutationMatrix(int n, int index1, int index2)
+template <>
+Matrix<std::complex<double>> Matrix<std::complex<double>>::get_conjugated() const
+{
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            result.data[i][j] = std::conj(data[i][j]);
+        }
+    }
+    return result;
+}
+
+template <>
+Matrix<double> Matrix<double>::get_conjugated() const
+{
+    return Matrix(data);
+}
+
+template <class T>
+Matrix<T> Matrix<T>::generatePermutationMatrix(int n, int index1, int index2)
 {
     if (index1 < 0 || index1 >= n || index2 < 0 || index2 >= n || index1 == index2)
     {
@@ -203,7 +256,8 @@ Matrix Matrix::generatePermutationMatrix(int n, int index1, int index2)
     return permutationMatrix;
 }
 
-std::tuple<Matrix, Matrix, Matrix> Matrix::LR() const
+template <class T>
+std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> Matrix<T>::LR() const
 {
     assert(rows == cols);
     int n = rows;
@@ -213,11 +267,11 @@ std::tuple<Matrix, Matrix, Matrix> Matrix::LR() const
 
     for (int j = 0; j < n - 1; j++)
     {
-        if (R(j, j) == 0)
+        if (std::abs(R(j, j)) == 0)
         {
             for (int i = j; i < n; i++)
             {
-                if (R(i, j) != 0)
+                if (std::abs(R(i, j)) != 0)
                 {
                     Matrix p = generatePermutationMatrix(n, j, i);
                     R = p * R;
@@ -227,7 +281,7 @@ std::tuple<Matrix, Matrix, Matrix> Matrix::LR() const
         }
         for (int i = j + 1; i < n; i++)
         {
-            double l = R(i, j) / R(j, j);
+            T l = R(i, j) / R(j, j);
             L(i, j) = l;
             for (int k = j; k < n; k++)
             {
@@ -238,7 +292,9 @@ std::tuple<Matrix, Matrix, Matrix> Matrix::LR() const
     }
     return std::tuple<Matrix, Matrix, Matrix>(L, R, P);
 }
-std::tuple<Matrix, Matrix> Matrix::LR_Line() const
+
+template <class T>
+std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::LR_Line() const
 {
     assert(rows == cols);
     int n = rows;
@@ -248,7 +304,7 @@ std::tuple<Matrix, Matrix> Matrix::LR_Line() const
     {
         for (int j = 0; j < i; j++)
         {
-            double sum = 0;
+            T sum = 0;
             for (int k = 0; k < j; k++)
             {
                 sum += L(i, k) * R(k, j);
@@ -257,7 +313,7 @@ std::tuple<Matrix, Matrix> Matrix::LR_Line() const
         }
         for (int j = i; j < n; j++)
         {
-            double sum = 0;
+            T sum = 0;
             for (int k = 0; k < i; k++)
             {
                 sum += L(i, k) * R(k, j);
@@ -268,7 +324,8 @@ std::tuple<Matrix, Matrix> Matrix::LR_Line() const
     return std::tuple<Matrix, Matrix>(L, R.getUpperRightTriangle());
 }
 
-std::tuple<Matrix, Matrix> Matrix::QR() const
+template <class T>
+std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::QR() const
 {
     Matrix R = *this;
     Matrix G = identity(rows);
@@ -277,11 +334,11 @@ std::tuple<Matrix, Matrix> Matrix::QR() const
         for (int i = j + 1; i < rows; i++)
         {
             std::cout << "begin: i: " << i << " j: " << j << std::endl;
-            if (R(i, j) != 0)
+            if (std::abs(R(i, j)) != 0)
             {
-                const double r = -std::sqrt(std::pow(R(j, j), 2) + std::pow(R(i, j), 2));
-                const double c = R(j, j) / r;
-                const double s = R(i, j) / r;
+                const T r = -std::sqrt(std::pow(R(j, j), 2) + std::pow(R(i, j), 2));
+                const T c = R(j, j) / r;
+                const T s = R(i, j) / r;
                 Matrix rotation = givensRotation(rows, j, i, c, s);
                 std::cout << "Rotation: \n"
                           << rotation << std::endl;
@@ -297,7 +354,8 @@ std::tuple<Matrix, Matrix> Matrix::QR() const
     return std::tuple<Matrix, Matrix>(Q, R);
 }
 
-Matrix Matrix::givensRotation(int n, int i, int j, double c, double s)
+template <class T>
+Matrix<T> Matrix<T>::givensRotation(int n, int i, int j, T c, T s)
 {
     Matrix result = identity(n);
     result(i, i) = c;
@@ -307,9 +365,12 @@ Matrix Matrix::givensRotation(int n, int i, int j, double c, double s)
 
     return result;
 }
+template class Matrix<double>;
+template class Matrix<std::complex<double>>;
 
 // Overloaded operator<< for printing the matrix
-std::ostream &operator<<(std::ostream &os, const Matrix &matrix)
+template<class T>
+std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix)
 {
     for (int i = 0; i < matrix.rows; ++i)
     {
