@@ -2,7 +2,9 @@
 #include <iostream>
 #include <vector>
 
-class Polynomial {
+// Polynomial in monomial basis, coefficients[i] belongs to x^i
+class Polynomial
+{
 private:
     std::vector<double> coefficients;
 
@@ -10,7 +12,7 @@ public:
     // Constructor to initialize a polynomial with coefficients
     Polynomial(std::vector<double> coeffs);
 
-    // Default constructor for an empty polynomial
+    // Default constructor for the zero polynomial
     Polynomial();
 
     // Overload the + operator for polynomial addition

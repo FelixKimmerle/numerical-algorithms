@@ -1,123 +1,143 @@
 #include <iostream>
+#include <string>
 #include <vector>
-#include <cassert>
-#include <iomanip>
 
+#include "Colors.hpp"
+#include "Interpolation.hpp"
 #include "Matrix.hpp"
 #include "Polynom.hpp"
-#include "Interpolation.hpp"
 
-//TODO lineare ausgleichsrechnung
-//TODO QR mit nicht quadratischen matrizen
-//TODO Hermite interpolation
-//TODO fast IDFT
+// TODO linear least squares (script 3.5)
+// TODO Hermite interpolation (script 4.3.6)
+// TODO fast IDFT / FFT (script 4.5.2)
+
+namespace
+{
+void heading(const std::string &title)
+{
+    std::cout << std::endl << BHYEL << "======== " << title << " ========" << reset << std::endl << std::endl;
+}
+
+void check_interpolation(const Polynomial &p, const std::vector<Point> &points)
+{
+    std::cout << "Check: ";
+    for (const auto &point : points)
+    {
+        std::cout << "p(" << format(point.x) << ") = " << format(p.evaluate(point.x)) << "  ";
+    }
+    std::cout << std::endl;
+}
+
+void print_vector(const std::string &name, const std::vector<Complex> &values)
+{
+    std::cout << name << " = (";
+    for (size_t i = 0; i < values.size(); i++)
+    {
+        std::cout << (i > 0 ? ", " : "") << format(values[i]);
+    }
+    std::cout << ")" << std::endl;
+}
+} // namespace
 
 int main()
 {
-    std::cout << std::fixed;
-    std::cout << std::setprecision(2);
-    int n = 4;
-    std::vector<std::vector<double>> values = {
-        {0.0, 10.0, 7.0, 4.0},
-        {0.0, 12.0, 1.0, 7.0},
-        {0.0, 2.0, 10.0, 12.0},
-        {14.0, 4.0, 12.0, 3.0}};
-    Matrix A(values);
-    // srand(time(0));
-    // Matrix A(4, 4);
-    //  for (int i = 0; i < n; i++)
-    //  {
-    //      for (int j = 0; j < n; j++)
-    //      {
-    //          A(i, j) = static_cast<int>((rand() / (double)RAND_MAX) * 10.0);
-    //      }
-    //  }
+    // ---------------------------------------------------------------- linear systems
     {
-        std::cout << "A: " << std::endl
-                  << A << std::endl;
-        std::cout << "------- LR -------" << std::endl;
-        auto res = A.LR();
-        auto L = std::get<0>(res);
-        auto R = std::get<1>(res);
-        auto P = std::get<2>(res);
-        std::cout << "L:" << std::endl
-                  << L << std::endl;
-        std::cout << "R:" << std::endl
-                  << R << std::endl;
-        std::cout << "P:" << std::endl
-                  << P << std::endl;
-        std::cout << "L * R:" << std::endl
-                  << L * R << std::endl;
-        std::cout << "P * A:" << std::endl
-                  << P * A << std::endl;
-        std::cout << P.transpose() * P << std::endl;
+        heading("LR decomposition with column pivoting (Alg. 3.10)");
+        Matrix<double> A({
+            {0, 1, 2},
+            {1, 2, 1},
+            {2, 6, 1},
+        });
+        std::cout << "A =" << std::endl << A << std::endl;
+        auto [L, R, P] = A.LR();
+        std::cout << "L =" << std::endl << L << std::endl;
+        std::cout << "R =" << std::endl << R << std::endl;
+        std::cout << "P =" << std::endl << P << std::endl;
+        std::cout << "Check: P * A - L * R =" << std::endl << P * A - L * R;
     }
     {
-        std::cout << "A: " << std::endl
-                  << A << std::endl;
-        std::cout << "------- QR -------" << std::endl;
-        auto res = A.QR();
-        auto Q = std::get<0>(res);
-        auto R = std::get<1>(res);
-        std::cout << "Q:" << std::endl
-                  << Q << std::endl;
-        std::cout << "R:" << std::endl
-                  << R << std::endl;
-        std::cout << "Q * R:" << std::endl
-                  << Q * R << std::endl;
+        heading("LR decomposition row by row (Alg. 3.8)");
+        Matrix<double> A({
+            {2, 1, 1},
+            {4, 3, 3},
+            {8, 7, 9},
+        });
+        std::cout << "A =" << std::endl << A << std::endl;
+        auto [L, R] = A.LR_Line();
+        std::cout << std::endl << "L =" << std::endl << L << std::endl;
+        std::cout << "R =" << std::endl << R << std::endl;
+        std::cout << "Check: A - L * R =" << std::endl << A - L * R;
+    }
+    {
+        heading("QR decomposition with Givens rotations (Alg. 3.21)");
+        Matrix<double> A({
+            {3, -6},
+            {4, -8},
+            {0, 1},
+        });
+        std::cout << "A =" << std::endl << A << std::endl;
+        auto [Q, R] = A.QR();
+        std::cout << "Q =" << std::endl << Q << std::endl;
+        std::cout << "R =" << std::endl << R << std::endl;
+        std::cout << "Check: A - Q * R =" << std::endl << A - Q * R << std::endl;
+        std::cout << "Check: Q^T * Q =" << std::endl << Q.transpose() * Q;
     }
 
-    std::vector<Point> points{{0,3},{1,1},{2,5},{5,-10}};
-    Polynomial result = lagrange_interpolation(points);
-    std::cout << result << std::endl;
-    std::cout << result.evaluate(0) << std::endl;
-    std::cout << result.evaluate(1) << std::endl;
-    std::cout << result.evaluate(2) << std::endl;
-    std::cout << result.evaluate(5) << std::endl;
-
-    result = aitken_neville(points);
-    std::cout << result << std::endl;
-    std::cout << result.evaluate(0) << std::endl;
-    std::cout << result.evaluate(1) << std::endl;
-    std::cout << result.evaluate(2) << std::endl;
-    std::cout << result.evaluate(5) << std::endl;
-
-    auto newton_result = newton(points);
-    std::cout << "newton: ";
-    for(auto x : newton_result)
+    // ---------------------------------------------------------------- polynomial interpolation
+    // Sampled from f(x) = x^3 - 2x + 1
+    const std::vector<Point> points{{0, 1}, {1, 0}, {2, 5}, {3, 22}};
+    std::cout << std::endl << "Interpolation points: ";
+    for (const auto &point : points)
     {
-        std::cout << x << ", ";
+        std::cout << "(" << format(point.x) << ", " << format(point.y) << ") ";
     }
     std::cout << std::endl;
-    result = get_newton_polynom(newton_result, points);
-    std::cout << result << std::endl;
-    std::cout << result.evaluate(0) << std::endl;
-    std::cout << result.evaluate(1) << std::endl;
-    std::cout << result.evaluate(2) << std::endl;
-    std::cout << result.evaluate(5) << std::endl;
+    {
+        heading("Lagrange interpolation (4.3.3)");
+        Polynomial p = lagrange_interpolation(points);
+        std::cout << "p(x) = " << p << std::endl;
+        check_interpolation(p, points);
+    }
+    {
+        heading("Aitken-Neville scheme (Alg. 4.12)");
+        Polynomial p = aitken_neville(points);
+        std::cout << "p(x) = P_" << points.size() - 1 << "," << points.size() - 1 << " = " << p << std::endl;
+        check_interpolation(p, points);
+    }
+    {
+        heading("Newton's divided differences (Alg. 4.17)");
+        std::vector<double> coefficients = newton(points);
+        std::cout << "Divided differences [x_0..x_k]f: ";
+        for (double c : coefficients)
+        {
+            std::cout << format(c) << " ";
+        }
+        std::cout << std::endl << std::endl;
 
-    std::cout << evaluate_newton(newton_result, points, 0) << std::endl;
-    std::cout << evaluate_newton(newton_result, points, 1) << std::endl;
-    std::cout << evaluate_newton(newton_result, points, 2) << std::endl;
-    std::cout << evaluate_newton(newton_result, points, 5) << std::endl;
+        std::cout << "Newton representation (4.44):" << std::endl;
+        Polynomial p = get_newton_polynom(coefficients, points);
+        std::cout << "     = " << p << std::endl;
+        check_interpolation(p, points);
 
+        heading("Evaluation of the Newton representation at x = 4 (Alg. 4.16)");
+        double value = evaluate_newton(coefficients, points, 4);
+        std::cout << "p(4) = " << format(value) << "   (f(4) = 4^3 - 2 * 4 + 1 = 57)" << std::endl;
+    }
 
-    auto r = IDFT(Matrix<Complex>({{0, 1, 0, 0, 10, 5, 0, 0}}));
-    std::cout << r << std::endl;
-    auto r_ = DFT(r);
-    std::cout << r_ << std::endl;
-    // {
-    //     std::cout << "A: " << std::endl
-    //               << A << std::endl;
-    //     auto res = A.LR_Line();
-    //     auto L = std::get<0>(res);
-    //     auto R = std::get<1>(res);
-    //     std::cout << "L:" << std::endl
-    //               << L << std::endl;
-    //     std::cout << "R:" << std::endl
-    //               << R << std::endl;
-    //     std::cout << "L * R:" << std::endl
-    //               << L * R << std::endl;
-    // }
+    // ---------------------------------------------------------------- trigonometric interpolation
+    {
+        const std::vector<Complex> v{1, 2, 0, 2};
+        heading("Discrete Fourier transform (Def. 4.30, 4.151)");
+        print_vector("v", v);
+        std::vector<Complex> c = DFT(v);
+        print_vector("c", c);
+
+        heading("Inverse discrete Fourier transform (Def. 4.30)");
+        print_vector("c", c);
+        std::vector<Complex> back = IDFT(c);
+        print_vector("IDFT(c)", back);
+        std::cout << "Check: IDFT(DFT(v)) = v" << std::endl;
+    }
     return 0;
 }

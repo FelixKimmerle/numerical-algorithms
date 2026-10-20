@@ -1,20 +1,17 @@
 TARGET_EXEC ?= num
 
 BUILD_DIR ?= ./build
-SRC_DIRS ?= src/
-CXX := g++
-LDFLAGS = -std=c++17 -lpthread -lstdc++ -lm
+SRC_DIRS ?= src
+CXX ?= g++
+MKDIR_P ?= mkdir -p
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp)
-#OBJS := $(SRCS:%=%.o)
-#DEPS := $(OBJS:.o=.d)
-
-DEPS = $(shell find build/ -name *.d)
+SRCS := $(shell find $(SRC_DIRS) -name '*.cpp')
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS ?= $(INC_FLAGS) -std=c++17 -MMD -MD -MP -Wall
+CPPFLAGS ?= $(INC_FLAGS) -std=c++17 -MMD -MP -Wall -Wextra
+LDFLAGS ?= -lm
 
 #
 # Debug build settings
@@ -22,17 +19,20 @@ CPPFLAGS ?= $(INC_FLAGS) -std=c++17 -MMD -MD -MP -Wall
 DBGDIR := $(BUILD_DIR)/debug
 DBGEXE := $(DBGDIR)/$(TARGET_EXEC)
 DBGOBJS := $(SRCS:%=$(DBGDIR)/%.o)
-DBGCFLAGS := $(CPPFLAGS) -g -O0 -ftrapv -Wall -Wextra -DDEBUG
+DBGCFLAGS := $(CPPFLAGS) -g -O0 -ftrapv -DDEBUG
 
 #
 # Release build settings
+# (no -ffast-math: the algorithms compare against exact zeros, e.g. when searching for a pivot)
 #
 RELDIR := $(BUILD_DIR)/release
 RELEXE := $(RELDIR)/$(TARGET_EXEC)
 RELOBJS := $(SRCS:%=$(RELDIR)/%.o)
-RELCFLAGS := $(CPPFLAGS) -O3 -Ofast -ffast-math -DRELEASE -DNDEBUG
+RELCFLAGS := $(CPPFLAGS) -O2 -DRELEASE -DNDEBUG
 
-.PHONY: clean release debug run rund all remake
+DEPS := $(DBGOBJS:.o=.d) $(RELOBJS:.o=.d)
+
+.PHONY: all clean release debug run rund remake test
 
 all: release debug
 remake: clean all
@@ -41,36 +41,32 @@ release: $(RELEXE)
 
 $(RELEXE): $(RELOBJS)
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(RELOBJS) -o $@ $(LDFLAGS)
+	$(CXX) $(RELOBJS) -o $@ $(LDFLAGS)
 
 $(RELDIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(RELCFLAGS) -c $< -o $@
 
-
 debug: $(DBGEXE)
 
 $(DBGEXE): $(DBGOBJS)
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(DBGOBJS) -o $@ $(LDFLAGS)
+	$(CXX) $(DBGOBJS) -o $@ $(LDFLAGS)
 
 $(DBGDIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(DBGCFLAGS) -c $< -o $@
 
-
 clean:
 	$(RM) -r $(BUILD_DIR)
 
-run:
+run: release
 	$(RELEXE)
 
-rund:
+rund: debug
 	$(DBGEXE)
 
-test:
-	valgrind --leak-check=full $(RELEXE)
+test: debug
+	valgrind --leak-check=full $(DBGEXE)
 
 -include $(DEPS)
-
-MKDIR_P ?= mkdir -p

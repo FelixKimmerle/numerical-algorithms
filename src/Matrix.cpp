@@ -1,34 +1,53 @@
+#include <algorithm>
 #include <cmath>
-#include <complex>
+#include <stdexcept>
+#include <string>
 
+#include "Colors.hpp"
 #include "Matrix.hpp"
 
-// Constructor to create an empty matrix
 template <class T>
 Matrix<T>::Matrix(int numRows, int numCols) : rows(numRows), cols(numCols)
 {
-    data.resize(rows, std::vector<T>(cols, 0.0));
+    data.resize(rows, std::vector<T>(cols, T(0)));
 }
 
-// Constructor to create a matrix from a 2D vector
 template <class T>
-Matrix<T>::Matrix(const std::vector<std::vector<T>> &input) : data(input), rows(input.size()), cols(input[0].size()) {}
+Matrix<T>::Matrix(const std::vector<std::vector<T>> &input)
+    : data(input), rows(input.size()), cols(input.empty() ? 0 : input[0].size())
+{
+    for (const auto &row : data)
+    {
+        if (static_cast<int>(row.size()) != cols)
+        {
+            throw std::invalid_argument("All rows of a matrix must have the same length.");
+        }
+    }
+}
 
-// Getter for the number of rows
+template <class T>
+Matrix<T> Matrix<T>::column(const std::vector<T> &values)
+{
+    Matrix result(values.size(), 1);
+    for (size_t i = 0; i < values.size(); ++i)
+    {
+        result.data[i][0] = values[i];
+    }
+    return result;
+}
+
 template <class T>
 int Matrix<T>::numRows() const
 {
     return rows;
 }
 
-// Getter for the number of columns
 template <class T>
 int Matrix<T>::numCols() const
 {
     return cols;
 }
 
-// Overloaded () operator to set a specific element in the matrix
 template <class T>
 T &Matrix<T>::operator()(int row, int col)
 {
@@ -39,7 +58,6 @@ T &Matrix<T>::operator()(int row, int col)
     throw std::out_of_range("Matrix indices out of bounds.");
 }
 
-// Overloaded () operator for getting a specific element from the matrix
 template <class T>
 const T &Matrix<T>::operator()(int row, int col) const
 {
@@ -50,7 +68,6 @@ const T &Matrix<T>::operator()(int row, int col) const
     throw std::out_of_range("Matrix indices out of bounds.");
 }
 
-// Overloaded operator* for matrix multiplication
 template <class T>
 Matrix<T> Matrix<T>::operator*(const Matrix &other) const
 {
@@ -60,7 +77,6 @@ Matrix<T> Matrix<T>::operator*(const Matrix &other) const
     }
 
     Matrix result(rows, other.cols);
-
     for (int i = 0; i < rows; ++i)
     {
         for (int j = 0; j < other.cols; ++j)
@@ -71,128 +87,21 @@ Matrix<T> Matrix<T>::operator*(const Matrix &other) const
             }
         }
     }
-
     return result;
 }
 
 template <class T>
-Matrix<T> Matrix<T>::operator*(T other) const
+Matrix<T> Matrix<T>::operator*(T scalar) const
 {
     Matrix result(rows, cols);
-
     for (int i = 0; i < rows; ++i)
     {
         for (int j = 0; j < cols; ++j)
         {
-            for (int k = 0; k < cols; ++k)
-            {
-                result.data[i][j] = data[i][k] * other;
-            }
+            result.data[i][j] = data[i][j] * scalar;
         }
     }
-
     return result;
-}
-
-template <class T>
-Matrix<T> Matrix<T>::transpose() const
-{
-    Matrix result(cols, rows);
-
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
-        {
-            result.data[j][i] = data[i][j];
-        }
-    }
-
-    return result;
-}
-template <class T>
-Matrix<T> Matrix<T>::identity(int size)
-{
-    Matrix identityMatrix(size, size);
-
-    for (int i = 0; i < size; ++i)
-    {
-        for (int j = 0; j < size; ++j)
-        {
-            if (i == j)
-            {
-                identityMatrix.data[i][j] = 1.0;
-            }
-        }
-    }
-
-    return identityMatrix;
-}
-
-template <class T>
-Matrix<T> Matrix<T>::getUpperRightTriangle(bool includeDiagonal) const
-{
-    if (rows != cols)
-    {
-        throw std::invalid_argument("Matrix is not square.");
-    }
-
-    Matrix triangleMatrix(rows, cols);
-
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
-        {
-            if ((includeDiagonal && i <= j) || (!includeDiagonal && i < j))
-            {
-                triangleMatrix(i, j) = data[i][j];
-            }
-        }
-    }
-
-    return triangleMatrix;
-}
-
-// Function to get the lower left triangle of the matrix
-template <class T>
-Matrix<T> Matrix<T>::getLowerLeftTriangle(bool includeDiagonal) const
-{
-    if (rows != cols)
-    {
-        throw std::invalid_argument("Matrix is not square.");
-    }
-
-    Matrix triangleMatrix(rows, cols);
-
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
-        {
-            if ((includeDiagonal && i >= j) || (!includeDiagonal && i > j))
-            {
-                triangleMatrix(i, j) = data[i][j];
-            }
-        }
-    }
-
-    return triangleMatrix;
-}
-
-template <class T>
-Matrix<T> Matrix<T>::getDiagonal() const
-{
-    if (rows != cols)
-    {
-        throw std::invalid_argument("Matrix is not square; diagonal cannot be extracted.");
-    }
-
-    Matrix diagonalMatrix(rows, 1);
-
-    for (int i = 0; i < rows; ++i)
-    {
-        diagonalMatrix(i, 0) = data[i][i];
-    }
-
-    return diagonalMatrix;
 }
 
 template <class T>
@@ -204,7 +113,6 @@ Matrix<T> Matrix<T>::operator-(const Matrix &other) const
     }
 
     Matrix result(rows, cols);
-
     for (int i = 0; i < rows; ++i)
     {
         for (int j = 0; j < cols; ++j)
@@ -212,7 +120,20 @@ Matrix<T> Matrix<T>::operator-(const Matrix &other) const
             result.data[i][j] = data[i][j] - other.data[i][j];
         }
     }
+    return result;
+}
 
+template <class T>
+Matrix<T> Matrix<T>::transpose() const
+{
+    Matrix result(cols, rows);
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            result.data[j][i] = data[i][j];
+        }
+    }
     return result;
 }
 
@@ -233,7 +154,68 @@ Matrix<Complex> Matrix<Complex>::get_conjugated() const
 template <>
 Matrix<double> Matrix<double>::get_conjugated() const
 {
-    return Matrix(data);
+    return *this;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::getUpperRightTriangle(bool includeDiagonal) const
+{
+    Matrix triangleMatrix(rows, cols);
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            if ((includeDiagonal && i <= j) || (!includeDiagonal && i < j))
+            {
+                triangleMatrix(i, j) = data[i][j];
+            }
+        }
+    }
+    return triangleMatrix;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::getLowerLeftTriangle(bool includeDiagonal) const
+{
+    Matrix triangleMatrix(rows, cols);
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            if ((includeDiagonal && i >= j) || (!includeDiagonal && i > j))
+            {
+                triangleMatrix(i, j) = data[i][j];
+            }
+        }
+    }
+    return triangleMatrix;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::getDiagonal() const
+{
+    if (rows != cols)
+    {
+        throw std::invalid_argument("Matrix is not square; diagonal cannot be extracted.");
+    }
+
+    Matrix diagonalMatrix(rows, 1);
+    for (int i = 0; i < rows; ++i)
+    {
+        diagonalMatrix(i, 0) = data[i][i];
+    }
+    return diagonalMatrix;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::identity(int size)
+{
+    Matrix identityMatrix(size, size);
+    for (int i = 0; i < size; ++i)
+    {
+        identityMatrix.data[i][i] = T(1);
+    }
+    return identityMatrix;
 }
 
 template <class T>
@@ -244,51 +226,84 @@ Matrix<T> Matrix<T>::generatePermutationMatrix(int n, int index1, int index2)
         throw std::invalid_argument("Invalid indices for permutation matrix.");
     }
 
-    Matrix permutationMatrix(n, n);
-    permutationMatrix = identity(n); // Initialize with an identity matrix
-
-    // Swap rows index1 and index2 to create the permutation
-    for (int col = 0; col < n; ++col)
-    {
-        std::swap(permutationMatrix(index1, col), permutationMatrix(index2, col));
-    }
-
+    Matrix permutationMatrix = identity(n);
+    std::swap(permutationMatrix.data[index1], permutationMatrix.data[index2]);
     return permutationMatrix;
 }
 
 template <class T>
+Matrix<T> Matrix<T>::givensRotation(int n, int i, int j, T c, T s)
+{
+    Matrix result = identity(n);
+    result(i, i) = c;
+    result(i, j) = s;
+    result(j, i) = -s;
+    result(j, j) = c;
+    return result;
+}
+
+// All step output uses 1-based indices like the script
+template <class T>
 std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> Matrix<T>::LR() const
 {
-    assert(rows == cols);
-    int n = rows;
+    if (rows != cols)
+    {
+        throw std::invalid_argument("LR decomposition needs a square matrix.");
+    }
+    const int n = rows;
     Matrix L = identity(n);
-    Matrix R(data);
+    Matrix R = *this;
     Matrix P = identity(n);
 
     for (int j = 0; j < n - 1; j++)
     {
-        if (std::abs(R(j, j)) == 0)
+        std::cout << BBLU << "Step j = " << j + 1 << reset << std::endl;
+
+        // Column pivoting: choose the element with the largest absolute value in column j (script 3.48)
+        int pivot = j;
+        for (int i = j + 1; i < n; i++)
         {
-            for (int i = j; i < n; i++)
+            if (std::abs(R(i, j)) > std::abs(R(pivot, j)))
             {
-                if (std::abs(R(i, j)) != 0)
-                {
-                    Matrix p = generatePermutationMatrix(n, j, i);
-                    R = p * R;
-                    P = p * P;
-                }
+                pivot = i;
             }
         }
+        if (std::abs(R(pivot, j)) == 0)
+        {
+            std::cout << "  Column " << j + 1 << " is already zero below the diagonal (A is singular)" << std::endl;
+            continue;
+        }
+        if (pivot != j)
+        {
+            std::cout << "  Pivot: |" << format(R(pivot, j)) << "| is the largest entry in column " << j + 1
+                      << " -> swap rows " << j + 1 << " and " << pivot + 1 << std::endl;
+            Matrix p = generatePermutationMatrix(n, j, pivot);
+            R = p * R;
+            P = p * P;
+            // The l_{i,k} already computed have to be swapped as well
+            for (int k = 0; k < j; k++)
+            {
+                std::swap(L(j, k), L(pivot, k));
+            }
+        }
+        else
+        {
+            std::cout << "  Pivot: " << format(R(j, j)) << " (no row swap needed)" << std::endl;
+        }
+
         for (int i = j + 1; i < n; i++)
         {
             T l = R(i, j) / R(j, j);
             L(i, j) = l;
+            std::cout << "  l_" << i + 1 << j + 1 << " = " << format(R(i, j)) << " / " << format_operand(R(j, j))
+                      << " = " << format(l) << "   (row " << i + 1 << " -= " << format_operand(l) << " * row "
+                      << j + 1 << ")" << std::endl;
             for (int k = j; k < n; k++)
             {
                 R(i, k) -= l * R(j, k);
             }
-            // std::cout << "R: " << std::endl << R;
         }
+        std::cout << "  A^(" << j + 2 << ") =" << std::endl << R << std::endl;
     }
     return std::tuple<Matrix, Matrix, Matrix>(L, R, P);
 }
@@ -296,12 +311,16 @@ std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> Matrix<T>::LR() const
 template <class T>
 std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::LR_Line() const
 {
-    assert(rows == cols);
-    int n = rows;
+    if (rows != cols)
+    {
+        throw std::invalid_argument("LR decomposition needs a square matrix.");
+    }
+    const int n = rows;
     Matrix L = identity(n);
     Matrix R(n, n);
     for (int i = 0; i < n; i++)
     {
+        std::cout << BBLU << "Row i = " << i + 1 << reset << std::endl;
         for (int j = 0; j < i; j++)
         {
             T sum = 0;
@@ -310,6 +329,8 @@ std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::LR_Line() const
                 sum += L(i, k) * R(k, j);
             }
             L(i, j) = ((*this)(i, j) - sum) / R(j, j);
+            std::cout << "  l_" << i + 1 << j + 1 << " = (" << format((*this)(i, j)) << " - " << format_operand(sum)
+                      << ") / " << format_operand(R(j, j)) << " = " << format(L(i, j)) << std::endl;
         }
         for (int j = i; j < n; j++)
         {
@@ -319,6 +340,8 @@ std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::LR_Line() const
                 sum += L(i, k) * R(k, j);
             }
             R(i, j) = (*this)(i, j) - sum;
+            std::cout << "  r_" << i + 1 << j + 1 << " = " << format((*this)(i, j)) << " - " << format_operand(sum)
+                      << " = " << format(R(i, j)) << std::endl;
         }
     }
     return std::tuple<Matrix, Matrix>(L, R.getUpperRightTriangle());
@@ -333,52 +356,57 @@ std::tuple<Matrix<T>, Matrix<T>> Matrix<T>::QR() const
     {
         for (int i = j + 1; i < rows; i++)
         {
-            std::cout << "begin: i: " << i << " j: " << j << std::endl;
-            if (std::abs(R(i, j)) != 0)
+            if (std::abs(R(i, j)) == 0)
             {
-                const T r = -std::sqrt(std::pow(R(j, j), 2) + std::pow(R(i, j), 2));
-                const T c = R(j, j) / r;
-                const T s = R(i, j) / r;
-                Matrix rotation = givensRotation(rows, j, i, c, s);
-                std::cout << "Rotation: \n"
-                          << rotation << std::endl;
-                R = rotation * R;
-                std::cout << "R after rotation: \n"
-                          << R << std::endl;
-                G = rotation * G;
+                std::cout << BBLU << "a_" << i + 1 << j + 1 << " is already 0" << reset << std::endl << std::endl;
+                continue;
             }
+            // Eliminate a_ij by rotating rows j and i (script Alg. 3.21, r with negative sign)
+            const T r = -std::sqrt(R(j, j) * R(j, j) + R(i, j) * R(i, j));
+            const T c = R(j, j) / r;
+            const T s = R(i, j) / r;
+            std::cout << BBLU << "Eliminate a_" << i + 1 << j + 1 << " with G_" << j + 1 << i + 1 << reset
+                      << ": r = " << format(r) << ", c = " << format(c) << ", s = " << format(s) << std::endl;
+            Matrix rotation = givensRotation(rows, j, i, c, s);
+            std::cout << "G_" << j + 1 << i + 1 << " =" << std::endl << rotation;
+            R = rotation * R;
+            std::cout << "A after the rotation =" << std::endl << R << std::endl;
+            G = rotation * G;
         }
     }
 
+    // The product of all rotations is Q^T
     Matrix Q = G.transpose();
     return std::tuple<Matrix, Matrix>(Q, R);
 }
 
 template <class T>
-Matrix<T> Matrix<T>::givensRotation(int n, int i, int j, T c, T s)
-{
-    Matrix result = identity(n);
-    result(i, i) = c;
-    result(i, j) = s;
-    result(j, i) = -s;
-    result(j, j) = c;
-
-    return result;
-}
-template class Matrix<double>;
-template class Matrix<Complex>;
-
-// Overloaded operator<< for printing the matrix
-template<class T>
 std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix)
 {
+    // Format everything first so the columns can be aligned
+    std::vector<std::vector<std::string>> cells(matrix.rows, std::vector<std::string>(matrix.cols));
+    std::vector<size_t> widths(matrix.cols, 0);
     for (int i = 0; i < matrix.rows; ++i)
     {
         for (int j = 0; j < matrix.cols; ++j)
         {
-            os << matrix.data[i][j] << " ";
+            cells[i][j] = format(matrix.data[i][j]);
+            widths[j] = std::max(widths[j], cells[i][j].size());
         }
-        os << std::endl;
+    }
+    for (int i = 0; i < matrix.rows; ++i)
+    {
+        os << "  [";
+        for (int j = 0; j < matrix.cols; ++j)
+        {
+            os << " " << std::setw(widths[j]) << cells[i][j];
+        }
+        os << " ]" << std::endl;
     }
     return os;
 }
+
+template class Matrix<double>;
+template class Matrix<Complex>;
+template std::ostream &operator<< <double>(std::ostream &os, const Matrix<double> &matrix);
+template std::ostream &operator<< <Complex>(std::ostream &os, const Matrix<Complex> &matrix);

@@ -1,10 +1,14 @@
 #include "Polynom.hpp"
+#include "Format.hpp"
+
+#include <algorithm>
+#include <cmath>
 
 // Constructor to initialize a polynomial with coefficients
 Polynomial::Polynomial(std::vector<double> coeffs) : coefficients(coeffs) {}
 
-// Default constructor for an empty polynomial
-Polynomial::Polynomial() {}
+// Default constructor for the zero polynomial
+Polynomial::Polynomial() : coefficients{0.0} {}
 
 // Overload the + operator for polynomial addition
 Polynomial Polynomial::operator+(const Polynomial &other) const
@@ -26,6 +30,10 @@ Polynomial Polynomial::operator+(const Polynomial &other) const
 // Overload the * operator for polynomial multiplication
 Polynomial Polynomial::operator*(const Polynomial &other) const
 {
+    if (coefficients.empty() || other.coefficients.empty())
+    {
+        return Polynomial();
+    }
     std::vector<double> result_coeffs(coefficients.size() + other.coefficients.size() - 1, 0.0);
 
     for (size_t i = 0; i < coefficients.size(); ++i)
@@ -83,33 +91,46 @@ double Polynomial::evaluate(double x) const
 // Function to calculate and return the derivative of the polynomial
 Polynomial Polynomial::derivative() const
 {
-    std::vector<double> derivative_coeffs;
+    if (coefficients.size() <= 1)
+    {
+        return Polynomial();
+    }
 
+    std::vector<double> derivative_coeffs;
     for (size_t i = 1; i < coefficients.size(); ++i)
     {
         derivative_coeffs.push_back(coefficients[i] * i);
     }
-
     return Polynomial(derivative_coeffs);
 }
 
-// Implementation of the friend function to print the polynomial
+// Prints the polynomial with the highest power first and leaves out zero terms
 std::ostream &operator<<(std::ostream &os, const Polynomial &polynomial)
 {
     bool first = true;
-    for (int i = polynomial.coefficients.size() - 1; i >= 0; --i)
+    for (int i = static_cast<int>(polynomial.coefficients.size()) - 1; i >= 0; --i)
     {
-        double value = polynomial.coefficients[i];
-        if (!first)
+        const double value = polynomial.coefficients[i];
+        if (std::abs(value) < PRINT_EPSILON)
         {
-            value = std::abs(value);
+            continue;
+        }
+        if (first)
+        {
+            os << (value < 0 ? "-" : "");
         }
         else
         {
-            first = false;
+            os << (value < 0 ? " - " : " + ");
         }
-        os << value;
-        if (i != 0)
+        first = false;
+
+        // Leave out a coefficient of 1 in front of x
+        if (i == 0 || std::abs(std::abs(value) - 1) >= PRINT_EPSILON)
+        {
+            os << format(std::abs(value));
+        }
+        if (i > 0)
         {
             os << "x";
         }
@@ -117,11 +138,10 @@ std::ostream &operator<<(std::ostream &os, const Polynomial &polynomial)
         {
             os << "^" << i;
         }
-
-        if (i != 0)
-        {
-            os << (polynomial.coefficients[i - 1] >= 0 ? " + " : " - ");
-        }
+    }
+    if (first)
+    {
+        os << format(0.0);
     }
     return os;
 }

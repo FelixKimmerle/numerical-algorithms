@@ -1,11 +1,10 @@
 #pragma once
 
-#include <vector>
-#include <cassert>
 #include <iostream>
-#include <complex>
+#include <tuple>
+#include <vector>
 
-typedef std::complex<double> Complex;
+#include "Format.hpp"
 
 template <class T>
 class Matrix;
@@ -13,7 +12,7 @@ class Matrix;
 template <class T>
 std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix);
 
-template<class T>
+template <class T>
 class Matrix
 {
 private:
@@ -22,52 +21,50 @@ private:
     int cols;
 
 public:
-    // Constructor to create an empty matrix
+    // Constructor to create a zero matrix
     Matrix(int numRows, int numCols);
 
     // Constructor to create a matrix from a 2D vector
     Matrix(const std::vector<std::vector<T>> &input);
 
-    // Getter for the number of rows
-    int numRows() const;
+    // Constructor to create a column vector
+    static Matrix column(const std::vector<T> &values);
 
-    // Getter for the number of columns
+    int numRows() const;
     int numCols() const;
 
-    // Overloaded () operator to set a specific element in the matrix
+    // Access to a specific element (0-based)
     T &operator()(int row, int col);
-
-    // Overloaded () operator for getting a specific element from the matrix
     const T &operator()(int row, int col) const;
 
-    // Overloaded operator* for matrix multiplication
     Matrix operator*(const Matrix &other) const;
+    Matrix operator*(T scalar) const;
+    Matrix operator-(const Matrix &other) const;
 
-    Matrix operator*(T other) const;
-
-    // Overloaded operator<< for printing the matrix
     Matrix transpose() const;
+    Matrix get_conjugated() const;
+    Matrix getUpperRightTriangle(bool includeDiagonal = true) const;
+    Matrix getLowerLeftTriangle(bool includeDiagonal = true) const;
+
+    // Diagonal entries as a column vector
+    Matrix getDiagonal() const;
 
     static Matrix identity(int size);
 
-    Matrix getUpperRightTriangle(bool includeDiagonal = true) const;
-
-    // Function to get the lower left triangle of the matrix
-    Matrix getLowerLeftTriangle(bool includeDiagonal = true) const;
-
-    Matrix getDiagonal() const;
-
-    Matrix operator-(const Matrix &other) const;
-
-    Matrix get_conjugated()const;
-
+    // Transposition matrix P_{index1,index2}: the identity with rows index1 and index2 swapped (script Def. 3.9)
     static Matrix generatePermutationMatrix(int n, int index1, int index2);
 
-    std::tuple<Matrix, Matrix, Matrix> LR()const;
-    std::tuple<Matrix, Matrix> LR_Line()const;
-    std::tuple<Matrix, Matrix> QR()const;
-    static Matrix givensRotation(int n, int j, int i, T c, T s);
+    // Givens rotation G_{i,j}(c, s) (script Def. 3.19)
+    static Matrix givensRotation(int n, int i, int j, T c, T s);
 
-    friend std::ostream &operator<<<>(std::ostream &os, const Matrix<T> &matrix);
+    // LR decomposition with column pivoting (script Alg. 3.10), returns (L, R, P) with P * A = L * R
+    std::tuple<Matrix, Matrix, Matrix> LR() const;
+
+    // LR decomposition computed row by row, without pivoting (script Alg. 3.8), returns (L, R) with A = L * R
+    std::tuple<Matrix, Matrix> LR_Line() const;
+
+    // QR decomposition with Givens rotations (script Alg. 3.21), returns (Q, R) with A = Q * R
+    std::tuple<Matrix, Matrix> QR() const;
+
+    friend std::ostream &operator<< <>(std::ostream &os, const Matrix<T> &matrix);
 };
-
